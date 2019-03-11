@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+    {% block title %}
+    Employees
+    {% endblock %}
+
+    {% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    {% endblock %}
+
+    {% block content %}
+    <a href="{% url 'create' %}" class="btn btn-primary btn-lg" style="margin: 5px;">Add a new employee</a>
+    <a href="{% url 'count' %}" class="btn btn-primary btn-lg">Count Ages</a>
+    <h1 class="text-center">List of employees</h1>
+    <table class="table table-striped" id="table_id">
+        <thead align="center">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Pay for work</th>
+                <th scope="col">Fire</th>
+                {% if ages %}
+                <th scope="col">Ages</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+    {% for each in employees %}
+            <tr class="text-center">
+                <td scope="row">
+                    <a href="{% url 'edit' pk=each.id %}">
+                        {{ each.name }}
+                    </a>
+                </td>
+                <td>
+                    {% if each.position == 0 %}
+                        Junior
+                    {% elif each.position == 1 %}
+                        Middle
+                    {% elif each.position == 2 %}
+                        Senior
+                    {% endif %}
+                </td>
+                <td>{{ each.birthday }}</td>
+                <td>{{ each.balance }}</td>
+                <td>
+                    <a href="{% url 'pay-money' pk=each.id %}">
+                        Pay for work
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'fire' pk=each.id %}">
+                        Fire
+                    </a>
+                </td>
+                {% if ages %}
+                <td>{{ each.age }}</td>
+                {% endif %}
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+    {% endblock %}

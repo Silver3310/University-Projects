@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" class="container col-sm-4" enctype="multipart/form-data">{% csrf_token %}
+     {% for field in form %}
+     <div class="form-group">
+         <p>{{field.errors}}</p>
+         <label>{{field.label}}</label>
+         <div>{{field}}</div>
+     </div>
+    {% endfor %}
+     <button class="btn" type="submit">Post</button>
+</form>
+
+
+<a href="{% url 'list' %}" class="btn btn-primary btn-lg" style="margin: 5px;">Back to the list</a>
+
+{% endblock %}

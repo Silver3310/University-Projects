@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+Letter Recognition
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/letter_recognition/style.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block script %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+    {% if response %}
+        alert('This is the letter - {{ response }}');
+    {% endif %}
+</script>
+{% endblock %}
+
+{% block content %}
+<body onload="InitThis();">
+
+
+    <div align="center">
+        <canvas id="myCanvas" width="500" height="500" style="border:2px solid black"></canvas>
+        <br /><br />
+        <button onclick="javascript:clearArea();return false;">Clear Area</button>
+        <button onclick="javascript:submitPixels();return false;">Recognize the letter</button>
+    </div>
+
+    {% comment %}
+    This is a hidden form used to send image data to the server
+    {% endcomment %}
+    <form action="{% url 'recognize' %}" method="get">
+        <input type="hidden" name="width" value="">
+        <input type="hidden" name="height" value="">
+        <input type="hidden" name="image_data" value="">
+    </form>
+
+
+    {% comment %}
+    script is loaded at the bottom of the page because canvas must be loaded first
+    {% endcomment %}
+    <script src="{% static 'js/letter_recognition/script.js' %}" type="text/javascript"></script>
+
+</body>
+{% endblock %}
